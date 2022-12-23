@@ -16,40 +16,46 @@
         </div>
     </div>
 
-    <pre>
-        {{contactName}}
-    </pre>
+    <!-- <pre>
+        {{contact | json}}
+    </pre> -->
     <!-- add contact form -->
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <form class="border p-3">
                  <div class="mb-2">
-                    <input name="contactName" [(ngModel)]="contactName" placeholder="Name" type="text" class="form-control">
+                    <div class="mb-2">
+                        <input name="id" [(ngModel)]="contact.id" placeholder="Contact Id" type="text" class="form-control">
+                     </div>
+
+                    <input name="contactName" [(ngModel)]="contact.name" placeholder="Name" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <input  placeholder="Photo url" type="text" class="form-control">
+
+                  
+                    <input name="photo" [(ngModel)]="contact.photo" placeholder="Photo url" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <input placeholder="email id" type="text" class="form-control">
+                    <input name="email" [(ngModel)]="contact.email" placeholder="email id" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <input placeholder="mobile number" type="text" class="form-control">
+                    <input name="mobile" [(ngModel)]="contact.mobile" placeholder="mobile number" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <input placeholder="company name" type="text" class="form-control">
+                    <input name="company" [(ngModel)]="contact.company" placeholder="company name" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <input placeholder="Title" type="text" class="form-control">
+                    <input name="title" [(ngModel)]="contact.title" placeholder="Title" type="text" class="form-control">
                  </div>
 
                  <div class="mb-2">
-                    <select name="" id="" class="form-control">
+                    <select name="groupId" [(ngModel)]="contact.groupId"  class="form-control">
                         <option value="" selected hidden disabled>Select a group</option>
                         <option value="{{group.id}}" *ngFor="let group of allGroups" >
                      {{group.name}}
@@ -59,13 +65,13 @@
                  </div>
 
                  <div class="mb-2">
-                    <input value="Create" type="button" class="btn btn-success">
+                    <input (click)="addContact()" value="Create" type="button" class="btn btn-success">
                  <a routerLink="/" class="btn btn-warning ms-3">Close</a>
                 </div>
                 </form>
             </div>
             <div class="col-md-4">
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxATEBUSEhIVFRUVFxASFRUXDw8SEhUSFRUWFhUYFxUYHSggGCYlGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OFRAQGi0lHyUuLy0tLS0tLS0tLS0vLystKy0tKy0rLS0tLS0tLy0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAAAQIEBQYHAwj/xABHEAABAgMFBQUEBAsIAwEAAAABAAIDETEEIUFhcQUGElGxB4GRofETInLBQlKy8CMyM0NigpKTosLRNFNjg6TS4eIkVHMU/8QAGgEBAAIDAQAAAAAAAAAAAAAAAAQFAQMGAv/EADQRAAIBAQMJBwQCAwEAAAAAAAABAgMEETEFEiFBUWGRsdETIjJxocHhUoHw8RQzI0KyFf/aAAwDAQACEQMRAD8A7ek8AoPIJkPRASTgFBOAqopcKqaaoATLVSTJU0zJSl5qgKpyqk8SozPog5lASDiUBxwVNbzRTXTqgJBnoqHRBUkACpJkFqm8W+TIRMOAA94uLvzbTyu/GPl0Wi7Q2nHjmcWI52RMmjRouCA6hat57EwyMdp+HiifZBCsYm/NjFPaHMQ/6kLmaIDpY36sf+INYY+RVzB3vsLrvayP6UOI3zlJcrRAdpstuhRBOHEZE+F7XdKK5nKq4cxxaeIEgihBII0IWy7G3yjwiBG/Cspf+UaMnY9/iEB0yeJQHEq12fboceGIsNwc005g4gjA5K4reaICoHFAZ6KK6dUrogJBnok+Sg33BMh6ICScAhOAUUuCU1QEk+KTVNMyVIurVAVIiIClxwCilwqpccBVKaoBTVRTMpTUpS81QCl5qpzPomZ9EHMoAOZUVvNEreaKa6dUArp1Wl787xFn/jQXScR+EcKgGjQcCRXLVbRtS2iDBfFNGNJ+I0aO8yC45HjOe5z3GbnEuceZJmUBSiIhgIiIAiIgCIiAze6O2DZ7Q0E/g4hDXjATua/uPlNdWrp1XDSJrrm7e1haoAcLi33IgnM8QA8jVDJlq6Ib7ghvuCZD0QDIeiUuCUuCilwqgJpSqimZKUzJSl5qgFLzVVAYlRmVIGJQEok0QFJMtVFMyVUTJU0vNUApeaqcz6JmfRBzKADmVFbzRK3mimunVAK6dUroldEyCA1DtItUoEOEPpvmfhYKeLm+C56t07TT78AD6sXqxaWgCIiGAiIgCIiAItk3b2Wx0P2kRodxEhoImOEXTlrPwVpvBskQz7SGPcJkR9V2WRUWNrpus6WvDdfsNzoSUFMwy3Ds1jn20WHg5jXd7XS/nWnra+zf+1Pl/dO+2xSjUdGyHolLglLglNUApdiopmSlMyUpeaoBS81U5lMymZQDMoL71FbzRSL9OqAqmilEBSbr1GZ9FJ5lQOZQAcyoreaJW80U106oBXTqldEroh5BAMgmQ9EyHolLggNC7TR78AfoxerFpa3PtNEnwPhi9WLVNn2QxIjWAEzI4sm4+Sw5KKvlghc3oRlbTu47ga6GZktaXMJkeKQnwn5FYaPAewye0tPIgjw5rodFS+GCPeAI5EAjwVHRynUjomr+fyWM7JF+F3HOkW7xdh2Z15hgfCXN8gZK2O7MA4vH67fmFNjlOi8U19vkjuyT3Gor3sNjfFeGNGpwAxJWzw927PO/jIzcBPwAWTs9mYwcLGhrchXvxXirlOCT7NO/fh1PULJK/vPQVQIIa0Mb+K0ADuUWqAIjHMNCCD/wvbIKnIKkznffr99vneT7lgc7jQi1xYatJadQZLaezj+1Pl/dO+2xY7eqzcMYOH0xf8Tbj5SWR7N/7U//AOTvtsXVUana04z2r9+t5TzjmycTo1NVFMyUpmSlLzVbDyKXmqnMpmUzKAZlRW80St5oprp1QCunVJz06pXTqmQogK0USRAQRiVTW80Ukc6JXTqgFdOqV0SuiZBAMgmQ9EyHolLggFLgrDadsMMBrfxnXz5Dmr+mqwm2RKJq3+qh26pKnRbjjgb7PBSmkzTt8+M+ze4lwHG2ZJMiZEDKh8F47n/jxPhb1K2C32URIbmO+kLjyOB8Vgd02FsSKHCRAAI5EOIKgwrZ9jnB4rk3jx0EiUM2vFrB9DZsymZTMpVVRMFUroldErogFdFOSKMggGQTIJkEpqgNb3xpC/zP5F57m8bYj3tJHu8MwSJkkGX8PReu+DfyQqSYmpPuLL7KsYgwmtxq7Nxr/TuVq62ZYoxWLv8A+ne+XEhqnnV29Su5GybLthdNr73VB5jkslmVgNlflWn4uhWfzKm5PqSqUu9qd3J+5otMFGegZlRW80St5oprp1U0jiunVK6dUrp1UVuFEArcKKqeAUZD0SlwQFUkREBBE9FFdFJv0UZBAMgmQ9EyHolLggFLglNUpqopmSgFMyVjtsWf3Q/EXHQrI0vNfvRJYnwyWqtSVWDg9Z7hNwkpI1XMq2hWMNjOi042gEfpNNfDospb7GWOn9E0yyKtarmZKdKUoPHBlqmppSRFUroldFNdFrPYrop0TIKMggGQTIJkEogFFFNUpqqqICztFjDosN7vzfGZfpHh4fCRPgrvMpmVcWOymI7kBU8h/VbUpTcYLTqXFv34Hl3QTbL3YsCsR36vzKylbzRQxgkLpAUCqrp1XSWekqVNQRU1J58nIV06pXTqldOqitwotx4FbhRTkPRMh6JkEAyCC67FRS4VUi7UoCpERAQeSjIeiOOASlwQClwSmqU1UUzJQCmZKUvNUpea/einM+iAZlMymZUVvNEBTFhB4k4XcvmsBbbIWHm00PPVbFXTqrTacLjhmX0b9ZV8pqFbbMqsHK7vLDp0N9Cq4Su1MwFdFOQTRRkFzpaDIJkEyCU1QCmqimqU1VVEAomZUZlRmUBcWSyuiO5AVPIf1Wes8BrWgASA88yrbZEKUOZ+kZ92H3zV9XTquhsNnVOmptd5+i2L8xKy0VXKTjqQrp1SunVK6dVFbhRTiOK3CinIeiZD0TIIBkFFLhVKXCqUzJQCmZKkXVqopeaqoDEoCUREBS44BKaoTLVRTMlAKZkpS81+9Epea/einM+iAZn0TMoOZUVvNEAreaKa6dUrp1SuiAV06ob7ghvuCZD0QGvbQs/A+QobxkOStsgsvt9/DCurxN8wVhmPBF1/3xXNWylGlWcY4Y8S2oScqak/IqpqopqlNVVRRTaRRMymZTMrIIzK97HZzEeBhU5K3c4VNwWW3efxsecOKWcgBXxUiy0lVqqD8+BrrScKbkjKtHcBRTXTqldOqitwoumKgVuFFOQ9EyHomQQDIKKXCqUuFUpmSgFMyUpeapS81U5lAMypAxKjM+iC+8oCqaJNEBSTLVRS81+9FUbr1GZQDMoOZTMqK3miAVvNFNdOqV06pXTqgFdEN9wQ33BMh6IBkPRKXBYjbG8dlsolFiAOwY0cTz+qKamQWO3U3r//AGRorWw+BjGtLZum9xJIm6VwpS/VbFSm4ud2hazU60FNQv0vUZfb8KcB0qgtPnI+RK1Rjy28V6reI8IFjmn6QLfESWjOaQTOouOowXOZXhdUhParuD6MusnyvhKOx38S6Zah9Kq9RFbWY8VYZlMyqtTZNdJGQ9q2pI8V5PtQwv8AIK0UV0TPYVJFUSIXG+i2bdyH+Bng5zjrKQ+RWsVW62KDww2N5AT1qfOasskwvqylsXP9MiZQlm01Fa3yPetwopyHotY3w3ndYnQJQw9kT2vGJkOHDwSLTT6RuOVFebE3oslpAEKJJ5/NvHA8d1HdxK6V0pqCndo29dhR9tDPdO/Ts6bfsZvIKKXCqUuFUpmStZtFMyUpeaqaXmqZlAMymZ9EHM+iit5ogFbzRSL9OqV06oDPTqgK0REBSeZUZlSRiVTW80QCt5oprp1SunVWtut0KEwvixGsYPpOMpnkOegTHQYbuxLqunVUxHgA3gAVJIAA1XPtt9pTRNllh8WHtHza39VovPeRotF2tty02k/hornDBs+Fg0YLu+qnUrBUnploXrwIFbKNKGiHefpx6XnU9tb+WKBNrCYz+TJcA1ebvCa0TbO/ltjTax3sWHBhIfLN9fCS1ZFY0rHSp6br3v8Ay4q6tvrVNdy3dcQTMzN5N5NSTmt67JIkrTFbzhz8HtH8y0Vbf2XReG3y+tDiN+y7+Ve7Ur6M/I8WLRXp+Z1+l5qtU2/ZCyKX4PvGR+kPn3ra8yvC12ZsRpDxdhzB5jNcnbLP29LNWOK8/lHXWat2U79Ws0nMor237KiQzMjiZg4D7QwVjXRctUhKnLNmrmXsJqazo6UK6JXRKq9sOzYkU+6JNxcbvDmsQhKcs2KvexGZSUVnS0InY1lMSKB9FvvOOlB3n5rcDyCtrDY2wm8Le84kq5yC6iw2bsKdzxel/m7neUVpr9rO9YLA5r2wO96zN5COfEwx8lztb12txP8AyYTPqwp/tPd/tWirrLGrqEPzWzkrfptE/tyRsuxd97bZ5Av9qz6j5uMsnfjDxIyW9bG7QbHFkIs4Dzg73mTyeKd4C5AixVsdKpque7R8GaVurU9d62PT8/mB9FwYjXNDwQ4GhBDhLIiqrHM+i+f9l7XtFndxQYrmYkAzadWm494W87F7S7w21w/8xnVzD1B7lX1bBUjpjp58OjZZ0cpUp6J91+nHqkdGreaKa6dVZ7N2lBtDOODEa9uRvB5OFW6FXldOqgtNaGWCaavQrp1QHlRRW4UVU8AsGSpFEkQEEc1FdOqkieipc7uAqUBiN5Nuw7JBMR95PusYDIvfyHIDE/8AC4xtnbEe1RPaRnTN/C0XMYOTW4Dz5q93v24bXanPB/BtmyEMAwGsubjf4DBYNXtksypRvfifpu6nO221OtLNXhXrv6bgiIphBCIiALO7jR+DaNnccXln7bXN6kLBK52dafZxocT+7cyJ+y4O+S8zjnRlHame6Us2cZbGj6FzK1zeneuDZBI+/FIm2GDKQwc8/RHmVO+W8TbJA4hIxXzEJuGb3ZCY1mAuL2i0PiPc97i5ziXOcTMkqmsdk7Xvy8PP4Ly223se5Dxcvky22N6bZaSeOKQ0/m2kthjuBme8lWrNtWlokIplmGu+1NY9Fays9KccyUItbGk16plMrTWjJyU2nubXIyETbdqcJGKe4cPmAvbZO8lss5nCiuliwkuhn9U01EisSiQs9GEXGMIpbEklwSErTWk1KU5NrW237nZd1N8YVrAY4CHG+pP3XSqWE158NdaraaXCq+c4by0hzSQQQQQZEEXgg4LsW4284tcIsiS9uwDiw420DwPIjA6hVdrsnZ9+GGvcXFitvavMnjq3/PPcaH2kx+LaMQfUbDZ/AHH7S1dZPee0e0tkd/OJEA+Fri1vkAsYrajHNpxW5cintEs6rN73zCIi2GkIiIC72ZtGNZ4giQXlrhyo4cnDEZLs26u8TLZB4h7sRshEZM3HAtyN8vBcOWU3b2w+yWhkVs5D3YjfrMJ94fMZgKLarMq0b14tXT8wJtjtToyufheO7f13HejyCnILygxmua1zCCHAOBFC0iYK9RdcqA6MmSIiAgiei1ftD2n7GwvDTJ0UiENHTL/4QR3hbQeS5b2t2ycaDBFGtLzym90h5M/iUiyQz60V9+BFtlRwoyaxw4mhIiLoTmQiIgCIiAIiIC+2ztWJaYgiRDeGsYBgGtErtTM6kqxRFhRUUksDMpOTbeIREWTAREQBXux9pRLNHZGhn3mmmDmm4tORCskWGk00zMZOLTWolxJMzU3nVQiLJgIiIAiIgCIiA652Y7UMSxmEb3QXcI+B3vNJ0PEO4Lcqalck7LLZwWww8IrHADm9nvDy411sXVqqC2U8ys9+nj8nS2Gpn0I36tHAqREUUlkE4BcV7Q43FtGMPq+yYO5jSfMldqJwC4fvzZorLdGc9jmte4lri0hrhISLXUKsMnL/ACvy90VuVP6V5+zMAiIrkoQiIgCIiAIiIAiIgCIiAIiIAiIgCIiAIiIAiIgCIiAzW5cbg2hZ3fptZ+2Cz+Zd1liVwXdazxH2uCYbHO4YkJzuFpcGtDwSSRS4YrvQGJVPlK7Pj5e5eZK/rl5+xKJNFXFoQT4rziwmlpa5ocDUEAg9xXoVEpX4oDWNpbi2CLM+zMNxxhu4R3MM2+S1u39mDxfBtDTya9hb/E2c/BdMAxKAYlSIWutDCXHTzI1Sx0Z4x4aORxW17i7Rh/meMc2xGO8iQ7yWHtOybTD/ACkGIz4ocQDxIX0DKdVNdOqkxyjNeJJ+hFlkum8JNep83zUr6Gj2GFE/HhMcP0obHT8QsfH3XsL7jZoQ58LeDw4ZLaspR1xfH9Gh5JlqmuD+ThKLtETcDZppBLdI0b5uKtIvZxYD+L7UaRGkDxaVtWUaO/h8mr/y6+1cX0ORIurP7M7LhFizz9mfkvB3ZfCwtDv3TT816VvobfQ8vJtfdxOYIulHstb/AO0f3A/3LzPZYf8A2/8AT/8Adev5tD6vR9Dw7BaPp9Y9TnKLow7Kzja/9P8A91WzstGNqP7gf7k/m0Pq9H0H8C0fT6x6nNkXTmdl0LG0O/dMHzVxD7MrLjGinTgHyK8/z6G18D2sm13qXE5Si65D7NrCKmKdXsHRqu2bgbOH5lztY0b5OC8vKNFbeHyelkyttXF9DjCia7rB3UsDLm2WGfiaYn2pzWQgbPgQxKHBht+GGxvQLW8pQ1RfE2rJUtc1w/RwazbMjxPycF7/AIYb3dAsvZNyNovl+BLQcXPhs8p8Xku20USlfitMspT/ANYpfn2N0clU14pN8F1OY2Lsxi3GNaGDJjHRD4u4ei2TZu4NghXua6K7/Efd+y2QPfNbWBiUAxKjztdaeMuGjkSqdjoQwjx08zxs1nZDaA1rWNFGtaGtHcF6i+8oBO8qa6KMSiZopRAQiIgCFEQAqURAFAREACIiAlQiIAiIgBQoiAlERAFAREACBSiAhERAEKIgBUoiAhERAf/Z" alt="" class="contact_image">
+                <img [src]="contact.photo" alt="" class="contact_image">
 
             </div>
         </div>

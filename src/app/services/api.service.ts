@@ -35,4 +35,15 @@ addContact(contactBody:any){
 return  this.http.post(this.baseUrl,contactBody)
 
 }
+// function for deleting a contact
+
+deleteContact(contactId:any){
+ return  this.http.delete(`${this.baseUrl}/${contactId}`)
+}
+// update contact 
+
+updateContact(contactId:any,contactBody:any){
+ return this.http.put(`${this.baseUrl}/${contactId}`,contactBody)
+}
+
 }
